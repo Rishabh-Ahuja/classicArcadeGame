@@ -1,28 +1,31 @@
 // Enemies our player must avoid
-var Enemy = function (x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+var Character = function (x,y,sprite,speed) {
     this.x = x;
     this.y = y;
+    this.sprite = sprite;
     this.speed = speed;
+};
+Character.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+var Enemy = function (x,y,sprite,speed) {
     this.width = 75;
     this.height = 50;
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    Character.call(this,x,y,sprite,speed);
 };
 
+Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.collisionDetection = function () {
     if (player.x <= this.x + this.width && player.x + player.width >= this.x && player.y <= this.y + this.height && player.height + player.y >= this.y) {
         console.log('collided');
         //check if lives are equal to 0 on detection
-        if(+$('.lives-number').text() === 0) {
+        if(+$('.lives-number').text() === 1) {
             player.resetPlayer();
             +$('.lives-number').text(5);
             +$('.score-number').text(0);
         }
         else {
-            playerReset();
+            player.resetPlayer();
             +$('.lives-number').text(+$('.lives-number').text()-1);
 
         }
@@ -47,32 +50,22 @@ Enemy.prototype.update = function (dt) {
     this.collisionDetection();
 };
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function (x, y, speed) {
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
+var Player = function (x,y,sprite,speed) {
     this.width = 50;
-    this.height = 50;
-    this.sprite = 'images/char-boy.png';
+    this.height =50;
+    Character.call(this,x,y,sprite,speed);
 };
+Player.prototype = Object.create(Character.prototype);
 Player.prototype.resetPlayer = function () {
     player.x = 202.5;
     player.y = 383;
 };
 Player.prototype.update = function () {
-
-
-};
-Player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 
 };
@@ -134,7 +127,8 @@ document.addEventListener('keyup', function (e) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var allEnemies = [new Enemy(0, 50, 70), new Enemy(0, 50, 70), new Enemy(0, 130, 70), new Enemy(0, 220, 80), new Enemy(5, 120, 90)];
-
-var player = new Player(202.5, 383, 100);
+var allEnemies = [new Enemy(0,50,'images/enemy-bug.png',80),new Enemy(0,50,'images/enemy-bug.png',70),new Enemy(0,130,'images/enemy-bug.png',70),new Enemy(0,220,'images/enemy-bug.png',80),new Enemy(0,120,'images/enemy-bug.png',190)];
+var player = new Player(202.5, 383,'images/char-boy.png',100);
+// set the constructor of player
+player.constructor = Player;
 

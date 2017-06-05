@@ -17,7 +17,7 @@ Enemy.prototype.collisionDetection = function () {
         console.log('collided');
         //check if lives are equal to 0 on detection
         if(+$('.lives-number').text() === 0) {
-            playerReset();
+            player.resetPlayer();
             +$('.lives-number').text(5);
             +$('.score-number').text(0);
         }
@@ -29,7 +29,7 @@ Enemy.prototype.collisionDetection = function () {
 
     }
 
-}
+};
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function (dt) {
@@ -63,14 +63,14 @@ var Player = function (x, y, speed) {
     this.height = 50;
     this.sprite = 'images/char-boy.png';
 };
-function playerReset  () {
+Player.prototype.resetPlayer = function () {
     player.x = 202.5;
     player.y = 383;
-}
+};
 Player.prototype.update = function () {
 
 
-}
+};
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
@@ -80,7 +80,7 @@ Player.prototype.handleInput = function (keyPress) {
     //handle keypress
 
     if (keyPress === 'left') {
-        this.x -= player.speed;
+        this.x -= this.speed;
 
     }
     if (keyPress === 'up') {
@@ -105,7 +105,7 @@ Player.prototype.handleInput = function (keyPress) {
     }
     //make sure player when wins resets its position
     if (this.y <= -17) {
-        playerReset();
+        this.resetPlayer();
         console.log('you won');
         // update the score
 

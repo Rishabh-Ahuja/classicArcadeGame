@@ -61,12 +61,12 @@ var Player = function (x,y,sprite,speed) {
     this.width = 50;
     this.height =50;
     Character.call(this,x,y,sprite,speed);
-}
+};
 // failed lookups fill fall to character prototype
 Player.prototype = Object.create(Character.prototype);
 Player.prototype.resetPlayer = function () {
-    player.x = 202.5;
-    player.y = 383;
+    this.x = 202.5;
+    this.y = 383;
 };
 Player.prototype.update = function () {
 
@@ -129,8 +129,8 @@ document.addEventListener('keyup', function (e) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
-var allEnemies = [new Enemy(0,50,'images/enemy-bug.png',80),new Enemy(0,50,'images/enemy-bug.png',70),new Enemy(0,130,'images/enemy-bug.png',70),new Enemy(0,220,'images/enemy-bug.png',80),new Enemy(0,120,'images/enemy-bug.png',190)];
+var enemyImage = 'images/enemy-bug.png'
+var allEnemies = [new Enemy(0,50,enemyImage,80),new Enemy(0,50,enemyImage,70),new Enemy(0,130,enemyImage,70),new Enemy(0,220,enemyImage,80),new Enemy(0,120,enemyImage,190)];
 var player = new Player(202.5, 383,'images/char-boy.png',100);
 // set the constructor of player
 player.constructor = Player;

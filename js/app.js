@@ -1,10 +1,12 @@
-// Enemies our player must avoid
+// added character super class
+'use strict';
 var Character = function (x,y,sprite,speed) {
     this.x = x;
     this.y = y;
     this.sprite = sprite;
     this.speed = speed;
 };
+
 Character.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -13,7 +15,7 @@ var Enemy = function (x,y,sprite,speed) {
     this.height = 50;
     Character.call(this,x,y,sprite,speed);
 };
-
+// failed lookups fill fall to character.prototype
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.collisionDetection = function () {
     if (player.x <= this.x + this.width && player.x + player.width >= this.x && player.y <= this.y + this.height && player.height + player.y >= this.y) {
@@ -59,7 +61,8 @@ var Player = function (x,y,sprite,speed) {
     this.width = 50;
     this.height =50;
     Character.call(this,x,y,sprite,speed);
-};
+}
+// failed lookups fill fall to character prototype
 Player.prototype = Object.create(Character.prototype);
 Player.prototype.resetPlayer = function () {
     player.x = 202.5;
